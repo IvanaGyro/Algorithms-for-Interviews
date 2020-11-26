@@ -17,6 +17,7 @@ int CASE_NO {1};
 
 template<typename T, typename V>
 void _test(const T& container, std::initializer_list<V> list) {
+    std::cout << "input: " << container << std::endl;
     assert(container.size() == list.size());
     auto begin_c {container.begin()};
     auto begin_l {list.begin()};
@@ -27,6 +28,7 @@ void _test(const T& container, std::initializer_list<V> list) {
 
 template<typename T>
 void _test(const T& a, const T& b) {
+    std::cout << "input: " << a << std::endl;
     assert(a == b);
 }
 

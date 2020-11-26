@@ -1,31 +1,19 @@
 #ifndef SHOW_H
 #define SHOW_H
 
-#include <iostream>
+#include <iterator>
+#include <utility>
 
-
-template <typename T>
-void print_range(const T &v)
-{
-    std::cout << '{';
-    auto i{v.begin()};
-    if (i != v.end())
-        std::cout << *i++;
-    for (; i != v.end(); ++i)
-        std::cout << ", " << *i;
-    std::cout << '}' << std::endl;
+template <class Stream, class Vector,
+          class Begin = decltype(std::begin(std::declval<Vector>()))>
+inline Stream& operator<<(Stream& stream, const Vector& vect) {
+    const char* dlm = "[";
+    for (const auto& i : vect) {
+        stream << dlm << i;
+        dlm = ", ";
+    }
+    stream << "]";
+    return stream;
 }
 
-template <typename Iter>
-void print_range(const Iter &begin, const Iter &end)
-{
-    std::cout << '[';
-    auto i{begin};
-    if (i < end)
-        std::cout << *i++;
-    for (; i < end; ++i)
-        std::cout << ", " << *i;
-    std::cout << ']' << std::endl;
-}
-
-#endif // SHOW_H
+#endif  // SHOW_H
