@@ -4,29 +4,21 @@
 
 using namespace std;
 
-class FenwickTree
-{
-public:
-    explicit FenwickTree(int n) : n{n}
-    {
-        bits.assign(n, 0);
-    }
+class FenwickTree {
+   public:
+    explicit FenwickTree(int n) : n{n} { bits.assign(n, 0); }
 
-    int prefix_sum(int i)
-    {
+    int prefix_sum(int i) {
         int sum{};
-        while (i >= 0)
-        {
+        while (i >= 0) {
             sum += bits[i];
             i = (i & (i + 1)) - 1;
         }
         return sum;
     }
 
-    void add(int i, int delta)
-    {
-        while (i < n)
-        {
+    void add(int i, int delta) {
+        while (i < n) {
             bits[i] += delta;
             i = i | (i + 1);
         }
@@ -36,31 +28,23 @@ public:
     int n;
 };
 
-class FenwickTreeOneIndexed
-{
-public:
-    explicit FenwickTreeOneIndexed(int n) : n{n}
-    {
-        bits.assign(n + 1, 0);
-    }
+class FenwickTreeOneIndexed {
+   public:
+    explicit FenwickTreeOneIndexed(int n) : n{n} { bits.assign(n + 1, 0); }
 
-    int prefix_sum(int i)
-    {
+    int prefix_sum(int i) {
         int sum{};
         ++i;
-        while (i > 0)
-        {
+        while (i > 0) {
             sum += bits[i];
             i -= i & -i;
         }
         return sum;
     }
 
-    void add(int i, int delta)
-    {
+    void add(int i, int delta) {
         ++i;
-        while (i <= n)
-        {
+        while (i <= n) {
             bits[i] += delta;
             i += i & -i;
         }
@@ -70,8 +54,7 @@ public:
     int n;
 };
 
-int main()
-{
+int main() {
     FenwickTree tree0(10);
     FenwickTreeOneIndexed tree1(10);
 
