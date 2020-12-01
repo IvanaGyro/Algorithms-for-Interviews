@@ -5,18 +5,16 @@
 #include <queue>
 
 template <typename T, typename Node>
-class _Node
-{
-public:
+class _Node {
+   public:
     _Node(void *ptr) : ptr{nullptr} {}
     _Node(const int &val) : ptr{new Node(val)} {}
-    Node* ptr;
+    Node *ptr;
 };
 
 template <typename T>
-class TreeNode
-{
-public:
+class TreeNode {
+   public:
     TreeNode() : val{} {}
     TreeNode(const T &val) : val{val} {}
     TreeNode(const T &val, TreeNode *left, TreeNode *right)
@@ -27,12 +25,12 @@ public:
 };
 
 template <typename T>
-TreeNode<T>* build_tree(std::initializer_list<_Node<T, TreeNode<T>>> il) {
-    TreeNode<T>* root {};
-    std::queue<TreeNode<T>**> q;
+TreeNode<T> *build_tree(std::initializer_list<_Node<T, TreeNode<T>>> il) {
+    TreeNode<T> *root{};
+    std::queue<TreeNode<T> **> q;
     q.push(&root);
-    for (auto& node : il) {
-        auto** cur = q.front();
+    for (auto &node : il) {
+        auto **cur = q.front();
         q.pop();
         *cur = node.ptr;
         if (*cur) {
@@ -43,4 +41,4 @@ TreeNode<T>* build_tree(std::initializer_list<_Node<T, TreeNode<T>>> il) {
     return root;
 }
 
-#endif // TREE_H
+#endif  // TREE_H
