@@ -7,7 +7,8 @@
 template <class Stream, class Vector,
           class Begin = decltype(std::begin(std::declval<Vector>()))>
 inline Stream& operator<<(Stream& stream, const Vector& vect) {
-    const char* dlm = "[";
+    stream << "[";
+    const char* dlm = "";
     for (const auto& i : vect) {
         stream << dlm << i;
         dlm = ", ";
