@@ -8,7 +8,7 @@ template <typename T, typename Node>
 class _Node {
    public:
     _Node(void *ptr) : ptr{nullptr} {}
-    _Node(const int &val) : ptr{new Node(val)} {}
+    _Node(const T &val) : ptr{new Node(val)} {}
     Node *ptr;
 };
 
@@ -38,6 +38,39 @@ TreeNode<T> *build_tree(std::initializer_list<_Node<T, TreeNode<T>>> il) {
             q.push(&(*cur)->right);
         }
     }
+    return root;
+}
+
+template <typename T>
+class GeneralTreeNode {
+   public:
+    GeneralTreeNode() : val{} {}
+    GeneralTreeNode(const T &val) : val{val} {}
+    GeneralTreeNode(const T &val,
+                    const std::vector<GeneralTreeNode<T> *> &children)
+        : val{val}, children{children} {}
+
+    T val{};
+    std::vector<GeneralTreeNode<T> *> children;
+};
+
+template <typename T>
+GeneralTreeNode<T> *build_general_tree(
+    std::initializer_list<std::initializer_list<_Node<T, GeneralTreeNode<T>>>>
+        ill) {
+    GeneralTreeNode<T> *dummy{new GeneralTreeNode<T>()};
+    std::queue<GeneralTreeNode<T> *> q;
+    q.push(dummy);
+    for (auto &il : ill) {
+        auto *cur = q.front();
+        q.pop();
+        for (auto node : il) {
+            cur->children.push_back(node.ptr);
+            q.push(node.ptr);
+        }
+    }
+    GeneralTreeNode<T> *root = dummy->children[0];
+    delete dummy;
     return root;
 }
 
